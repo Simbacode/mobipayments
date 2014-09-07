@@ -4,23 +4,22 @@ package com.simbacode.payments.oauth;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.security.Security;
+import java.security.GeneralSecurityException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
+import javax.crypto.Mac;
+import javax.crypto.SecretKey;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
-import org.bouncycastle.crypto.digests.SHA1Digest;
-import org.bouncycastle.crypto.macs.HMac;
-import org.bouncycastle.crypto.params.KeyParameter;
-import org.bouncycastle.jce.provider.BouncyCastleProvider;
 
 /**
  * Very basic sample code that demonstrates how to make an OAuth 1.0
@@ -29,27 +28,27 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
  */
 public class Pesapal {
 
+    private static final Base64 BASE64 = new Base64();
+
     public static void main(final String[] args) throws Exception {
         // Setup the variables necessary to create the OAuth 1.0 signature and
         // make the request
-        Security.addProvider(new BouncyCastleProvider());
-        String httpMethod = "POST";
+        String httpMethod = "GET";
         URL url = new URL("http://demo.pesapal.com/API/PostPesapalDirectOrderV4");
         String consumerKey = "{YOUR KEY}";
-		String secret = "{YOUR SECRET}";
-		String signatureMethod = "HMac-SHA1";
-		String body = "";
-		
-		//get form details
-		String amount = "1000.00";
-		String desc = "desc";
-		String type = "MERCHANT";
-		String reference = "1111";//unique order id of the transaction, generated
-	
-		String email = "{YOUR EMAIL}";
-		//ONE of email or phonenumber is required
-		String phonenumber = "{YOUR PHONE}";
+        String secret = "{YOUR SECRET}";
+        String signatureMethod = "HMac-SHA1";
+        String body = "";
 
+        //get form details
+        String amount = "1000.00";
+        String desc = "desc";
+        String type = "MERCHANT";
+        String reference = "1111";//unique order id of the transaction, generated
+
+        String email = "{YOUR EMAIL}";
+        //ONE of email or phonenumber is required
+        String phonenumber = "{YOUR PHONE}";
 
         //redirect url, the page that will handle
         String callback_url = "http://simbacode.com/redirect.php";
@@ -77,12 +76,10 @@ public class Pesapal {
 
         // Create the OAuth parameter name/value pair
         Map<String, String> oauthParams = new LinkedHashMap<String, String>();
-        oauthParams.put("oauth_consumer_key", consumerKey);
-        oauthParams.put("oauth_callback", callback_url);
-        oauthParams.put("pesapal_request_data", post_xml);
         oauthParams.put("oauth_signature_method", signatureMethod);
         oauthParams.put("oauth_timestamp", timestamp);
         oauthParams.put("oauth_nonce", nonce);
+        //oauthParams.put("oauth_version", "1.0");
 
         // Get the OAuth 1.0 Signature
         String signature = generateSignature(httpMethod, url, oauthParams,
@@ -92,6 +89,11 @@ public class Pesapal {
 
         // Add the oauth_signature parameter to the set of OAuth Parameters
         oauthParams.put("oauth_signature", signature);
+
+        oauthParams.put("oauth_consumer_key", consumerKey);
+        oauthParams.put("oauth_callback", callback_url);
+        oauthParams.put("pesapal_request_data", post_xml);
+
 
         // Genterate a string of comma delimited: keyName="URL-encoded(value)"
         // pairs
@@ -105,33 +107,18 @@ public class Pesapal {
             i++;
 
             if (keyNames.length > i) {
-                sb.append(",");
+                sb.append("&");
             }
         }
 
-        // Build the X-Authorization request header
-        String xauth = String.format("OAuth realm=\"%s\",%s", url,
+        String authstr = String.format("%s?%s", url,
                 sb.toString());
-        System.out.println(String.format("X-Authorization request header = %s",
-                xauth));
+        url = new URL(authstr);
 
         try {
             // Setup the Request
             request = (HttpURLConnection) url.openConnection();
             request.setRequestMethod(httpMethod);
-            request.addRequestProperty("X-Authorization", xauth);
-
-            // Set the request body if making a POST or PUT request
-            if ("POST".equals(httpMethod) || "PUT".equals(httpMethod)) {
-                byte[] byteArray = body.toString().getBytes("UTF-8");
-                request.setRequestProperty("Content-Length", ""
-                        + byteArray.length);
-                request.setDoOutput(true);
-
-                OutputStream postStream = request.getOutputStream();
-                postStream.write(byteArray, 0, byteArray.length);
-                postStream.close();
-            }
 
             // Send Request & Get Response
             InputStreamReader reader = new InputStreamReader(
@@ -165,7 +152,8 @@ public class Pesapal {
      * @return A unique identifier for the request
      */
     private static String getNonce() {
-        return RandomStringUtils.randomAlphanumeric(32);
+        //return RandomStringUtils.randomAlphanumeric(32);
+        return "x" + System.currentTimeMillis();
     }
 
     /**
@@ -194,7 +182,7 @@ public class Pesapal {
      */
     private static String generateSignature(String httpMethod, URL url,
             Map<String, String> oauthParams, byte[] requestBody, String secret)
-            throws UnsupportedEncodingException {
+            throws UnsupportedEncodingException, NoSuchAlgorithmException, InvalidKeyException, GeneralSecurityException {
         // Ensure the HTTP Method is upper-cased
         httpMethod.toUpperCase();
 
@@ -210,27 +198,19 @@ public class Pesapal {
         String baseString = String.format("%s&%s&%s", httpMethod, encodedUri,
                 encodedParams);
 
-        return generatemac(secret, baseString);
+        return computeSignature(baseString, secret);
     }
 
-    private static String generatemac(String key, String msg) throws UnsupportedEncodingException {
+    private static String computeSignature(String baseString, String keyString) throws GeneralSecurityException, UnsupportedEncodingException {
 
-        HMac hmac = new HMac(new SHA1Digest());
-        byte[] resBuf = new byte[hmac.getMacSize()];
-        byte[] keyBytes = key.getBytes("UTF-8");
-        byte[] data = msg.getBytes("UTF-8");
+        Mac mac = Mac.getInstance("HmacSHA1");
+        SecretKey skey = new SecretKeySpec(keyString.getBytes("UTF-8"), "HmacSHA1");
+        mac.init(skey);
+        String signature =
+                new String(BASE64.encode(mac.doFinal(baseString.toString().getBytes("UTF-8"))));
 
+        return signature;
 
-        hmac.init(new KeyParameter(keyBytes));
-        hmac.update(data, 0, data.length);
-        hmac.doFinal(resBuf, 0);
-
-
-        // Convert the CMAC to a Base64 string and remove the new line the
-        // Base64 library adds
-        String hs = Base64.encodeBase64String(resBuf).replaceAll("\r\n", "");
-
-        return hs;
     }
 
     /**
