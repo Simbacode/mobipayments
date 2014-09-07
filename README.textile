@@ -1,4 +1,4 @@
-h2. Welcome to the home of Mobipayments, the simple mobile payment Java lib!
+h2. Welcome to the home of Mobipayments, the simple mobile money payment Java lib!
 
 Currently we are integrating pesapal;
 
