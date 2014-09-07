@@ -18,7 +18,13 @@ import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
+import java.security.SignatureException;
+import java.util.Formatter;
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
@@ -34,7 +40,8 @@ public class Pesapal {
         // Setup the variables necessary to create the OAuth 1.0 signature and
         // make the request
         String httpMethod = "GET";
-        URL url = new URL("http://demo.pesapal.com/API/PostPesapalDirectOrderV4");
+        String urlString = "http://demo.pesapal.com/API/PostPesapalDirectOrderV4";
+
         String consumerKey = "{YOUR KEY}";
         String secret = "{YOUR SECRET}";
         String signatureMethod = "HMac-SHA1";
@@ -79,9 +86,10 @@ public class Pesapal {
         oauthParams.put("oauth_signature_method", signatureMethod);
         oauthParams.put("oauth_timestamp", timestamp);
         oauthParams.put("oauth_nonce", nonce);
-        //oauthParams.put("oauth_version", "1.0");
+        oauthParams.put("oauth_version", "1.0");
 
         // Get the OAuth 1.0 Signature
+        URL url = new URL(urlString);
         String signature = generateSignature(httpMethod, url, oauthParams,
                 requestBody, secret);
         System.out
@@ -89,7 +97,6 @@ public class Pesapal {
 
         // Add the oauth_signature parameter to the set of OAuth Parameters
         oauthParams.put("oauth_signature", signature);
-
         oauthParams.put("oauth_consumer_key", consumerKey);
         oauthParams.put("oauth_callback", callback_url);
         oauthParams.put("pesapal_request_data", post_xml);
@@ -102,8 +109,8 @@ public class Pesapal {
         Object[] keyNames = oauthParams.keySet().toArray();
         for (Object keyName : keyNames) {
             String value = oauthParams.get((String) keyName);
-            sb.append(keyName).append("=\"")
-                    .append(URLEncoder.encode(value, "UTF-8")).append("\"");
+            sb.append(keyName).append("=")
+                    .append(URLEncoder.encode(value, "UTF-8"));
             i++;
 
             if (keyNames.length > i) {
@@ -111,14 +118,19 @@ public class Pesapal {
             }
         }
 
-        String authstr = String.format("%s?%s", url,
-                sb.toString());
-        url = new URL(authstr);
-
         try {
-            // Setup the Request
+            // Setup the Request with params            
+            String urlWithParams = String.format("%s?%s", url,
+                    sb.toString());
+            url = new URL(urlWithParams);
+
+            System.out
+                    .println(String.format("%s", urlWithParams));
+            //open connection
             request = (HttpURLConnection) url.openConnection();
             request.setRequestMethod(httpMethod);
+            //specify correct auth header
+            request.addRequestProperty("Authorization", xAuathHeader(consumerKey, signatureMethod, signature, timestamp, nonce, urlString));
 
             // Send Request & Get Response
             InputStreamReader reader = new InputStreamReader(
@@ -152,8 +164,8 @@ public class Pesapal {
      * @return A unique identifier for the request
      */
     private static String getNonce() {
-        //return RandomStringUtils.randomAlphanumeric(32);
-        return "x" + System.currentTimeMillis();
+        return RandomStringUtils.randomAlphanumeric(32);
+        //return "x" + System.currentTimeMillis();
     }
 
     /**
@@ -164,6 +176,37 @@ public class Pesapal {
      */
     private static String getTimestamp() {
         return Long.toString((System.currentTimeMillis() / 1000));
+    }
+
+    private static String xAuathHeader(String consumerKey, String signatureMethod, String signature, String timestamp, String nonce, String url) throws UnsupportedEncodingException {
+
+        // Genterate a string of comma delimited: keyName="URL-encoded(value)"
+        // pairs
+        StringBuilder sb1 = new StringBuilder();
+        sb1
+                .append("oauth_consumer_key=")
+                .append(URLEncoder.encode(consumerKey, "UTF-8"))
+                .append(",")
+                .append("oauth_signature_method=")
+                .append(URLEncoder.encode(signatureMethod, "UTF-8"))
+                .append(",")
+                .append("oauth_signature=")
+                .append(URLEncoder.encode(signature, "UTF-8"))
+                .append(",")
+                .append("oauth_timestamp=")
+                .append(URLEncoder.encode(timestamp, "UTF-8"))
+                .append(",")
+                .append("oauth_nonce=")
+                .append(URLEncoder.encode(nonce, "UTF-8"))
+                .append(",")
+                .append("oauth_version=1.0");
+
+        // Build the X-Authorization request header
+        String xauth = String.format("OAuth realm=\"%s\",%s", url,
+                sb1.toString());
+        System.out.println(String.format("X-Authorization request header = %s",
+                xauth));
+        return xauth;
     }
 
     /**
@@ -197,6 +240,9 @@ public class Pesapal {
         // Build the signature base string to be signed with the Consumer Secret
         String baseString = String.format("%s&%s&%s", httpMethod, encodedUri,
                 encodedParams);
+
+        //System.out.println(String.format("Encoded url %s",baseString));
+
 
         return computeSignature(baseString, secret);
     }
