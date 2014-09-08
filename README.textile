@@ -20,7 +20,6 @@ pesapal.consumerKey: {YOUR KEY}
 pesapal.consumerSecret: {YOUR SECRET}
 pesapal.callbackURL: http://simbacode.com/redirect.php
 pesapal.consumer.oauth_signature_method: HMAC-SHA1
-There can be more consumer properties.
 pesapal.serviceProvider.requestTokenURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
 pesapal.serviceProvider.userAuthorizationURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
 pesapal.serviceProvider.accessTokenURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
