@@ -15,6 +15,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -29,27 +30,40 @@ import net.oauth.OAuthMessage;
 import net.oauth.OAuthException;
 import org.apache.commons.lang3.StringEscapeUtils;
 
-// See the readme.txt and manpage.txt for more information
+/**
+ * This is main Pesapal Oauth 1.0 java class
+ *
+ * @author Acellam Guy
+ * @version 0.1
+ */
 public class Pesapal {
 
     private Properties props;
     private File propFile;
 
-    
-    public static void main(String[] argv) throws Exception {
-        URL location = Pesapal.class.getProtectionDomain().getCodeSource().getLocation();
-        new Pesapal(new File("").getAbsolutePath() + "\\pesapal.properties").execute("request");
-    }
-
+    /**
+     * Constructor for the java class
+     *
+     * @param fileName the path of the config file that contains pesapal
+     * details.
+     * @throws IOException
+     */
     public Pesapal(String fileName) throws IOException {
         props = new Properties();
         propFile = new File(fileName);
         props.load(new FileInputStream(propFile));
     }
 
+    /**
+     * This is used to create the consumer for Oauth Request
+     *
+     * @see OAuthAccessor
+     * @return OAuthAccessor
+     */
     private OAuthAccessor createOAuthAccessor() {
+
         String consumerKey = props.getProperty("pesapal.consumerKey");
-        String callbackUrl = "http://simbacode.com/redirect";
+        String callbackUrl = props.getProperty("pesapal.callbackURL");
         String consumerSecret = props.getProperty("pesapal.consumerSecret");
 
         String reqUrl = props.getProperty("pesapal.serviceProvider.requestTokenURL");
@@ -62,74 +76,54 @@ public class Pesapal {
         return new OAuthAccessor(consumer);
     }
 
-    private void updateProperties(String msg) throws IOException {
-        props.store(new FileOutputStream(propFile), msg);
-    }
-
-    private OAuthMessage sendRequest(Map map, String url) throws IOException,
-            URISyntaxException, OAuthException {
-        List<Map.Entry> params = new ArrayList<Map.Entry>();
-        Iterator it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry p = (Map.Entry) it.next();
-            params.add(new OAuth.Parameter((String) p.getKey(),
-                    (String) p.getValue()));
-        }
-        OAuthAccessor accessor = createOAuthAccessor();
-        accessor.tokenSecret = props.getProperty("pesapal.consumerSecret");
-        OAuthClient client = new OAuthClient(new HttpClient4());
-        return client.invoke(accessor, "GET", url, params);
-    }
-
-    public void execute(String operation) throws IOException, OAuthException,
+    /**
+     * Makes request to the pesapal server and returns the response that
+     * contains All the OATH details.
+     *
+     * @see OAuthMessage
+     * @param amount the amount of money for the good/service
+     * @param desc description of what is being paid for good or service
+     * @param type the type of pesapal account eg Merchant
+     * @param reference the unique id to your request.
+     * @param email
+     * @param phonenumber
+     * @param first_name
+     * @param last_name
+     * @return
+     * @throws IOException
+     * @throws OAuthException
+     * @throws URISyntaxException
+     */
+    public OAuthMessage execute(String amount, String desc, String type, String reference, String email, String phonenumber, String first_name, String last_name) throws IOException, OAuthException,
             URISyntaxException {
-        if ("request".equals(operation)) {
-            OAuthAccessor accessor = createOAuthAccessor();
-            OAuthClient client = new OAuthClient(new HttpClient4());
+        
+        OAuthAccessor accessor = createOAuthAccessor();
+        OAuthClient client = new OAuthClient(new HttpClient4());
+        
+        String callbackUrl = props.getProperty("pesapal.callbackURL");
+        callbackUrl = URLEncoder.encode(callbackUrl, "UTF-8");
+ 
+        //construct pesapal xml
+        String post_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><PesapalDirectOrderInfo xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Amount=\""
+                + amount + "\" Description=\"" + desc + "\" Type=\"" + type
+                + "\" Reference=\"" + reference + "\" FirstName=\"" + first_name
+                + "\" LastName=\"" + last_name + "\" Email=\"" + email + "\" PhoneNumber=\""
+                + phonenumber + "\" xmlns=\"http://www.pesapal.com\" />";
+        post_xml = StringEscapeUtils.escapeXml(post_xml);
 
-            //get form details
-            String amount = "1000.00";
-            String desc = "desc";
-            String type = "MERCHANT";
-            String reference = "1111";//unique order id of the transaction, generated
-
-            String email = "abc@yahoo.com.com";
-            //ONE of email or phonenumber is required
-            String phonenumber = "0123456789";
-            String first_name = "Acellam";
-            String last_name = "Guy";
-
-
-            String post_xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?><PesapalDirectOrderInfo xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Amount=\""
-                    + amount + "\" Description=\"" + desc + "\" Type=\"" + type
-                    + "\" Reference=\"" + reference + "\" FirstName=\"" + first_name
-                    + "\" LastName=\"" + last_name + "\" Email=\"" + email + "\" PhoneNumber=\""
-                    + phonenumber + "\" xmlns=\"http://www.pesapal.com\" />";
-            post_xml = StringEscapeUtils.escapeXml(post_xml);
-
-            Collection<? extends Map.Entry> parameters = new ArrayList<Map.Entry>();
-            List<Map.Entry> p = (parameters == null) ? new ArrayList<Map.Entry>(
-                    1)
-                    : new ArrayList<Map.Entry>(parameters);
-            p.add(new OAuth.Parameter("pesapal_request_data",
-                    post_xml));
-            parameters = p;
-            client.getRequestToken(accessor, "GET", parameters);
-
-            props.setProperty("pesapal.requestToken", accessor.requestToken);
-            props.setProperty("pesapal.tokenSecret", accessor.tokenSecret);
-
-            updateProperties("Last action: added requestToken");
-            System.out.println(propFile.getCanonicalPath() + " updated");
-        } else {
-            // access the resource
-            Properties paramProps = new Properties();
-            paramProps.setProperty("pesapal.oauth_token",
-                    props.getProperty("accessToken"));
-
-            OAuthMessage response = sendRequest(paramProps, operation);
-            System.out.println(response.readBodyAsString());
-        }
+        //add other parameters
+        Collection<? extends Map.Entry> parameters = new ArrayList<Map.Entry>();
+        List<Map.Entry> p = (parameters == null) ? new ArrayList<Map.Entry>(
+                1)
+                : new ArrayList<Map.Entry>(parameters);
+        p.add(new OAuth.Parameter("pesapal_request_data",
+                post_xml));
+        p.add(new OAuth.Parameter("oauth_callback",
+                callbackUrl));
+        parameters = p;
+        
+        //make request
+        return client.getRequestResponse(accessor, "GET", parameters);
 
     }
 }

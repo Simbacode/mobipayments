@@ -7,6 +7,35 @@ Currently we are integrating pesapal;
 
 !https://secure.travis-ci.org/Simbacode/mobipayments.png?branch=master(travis-ci-status)!
 
+h1. How to use
+This is a Maven poject and hence it is easy to use the library. 
+To directly use it as part of your project source code;
+1. git clone.
+2.You can also use maven. 
+<dependency>
+<groupId>com.simbacode.payments</groupId>
+    <artifactId>mobipayments</artifactId>
+    <version>0.0.1</version>
+</dependency>
+
+Make sure that you provide a properties file. see pesapal.properties for example
+but remember to change the following properties to your needs;
+
+pesapal.consumerKey: {YOUR KEY}
+pesapal.consumerSecret: {YOUR SECRET}
+pesapal.callbackURL: http://simbacode.com/redirect.php
+pesapal.consumer.oauth_signature_method: HMAC-SHA1
+# There can be more consumer properties.
+pesapal.serviceProvider.requestTokenURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
+pesapal.serviceProvider.userAuthorizationURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
+pesapal.serviceProvider.accessTokenURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
+
+
+There is a sample CMD app called pesapalCMD that uses this library in the src. enjoy!
+
+h1. Way forward
+ Create a variety of examples.
+
 h1. Forks
 
 Looking for a mobipayments variation? check the "Fork List":https://github.com/Simbacode/mobipayments/wiki/Forks

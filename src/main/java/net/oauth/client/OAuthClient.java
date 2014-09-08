@@ -196,6 +196,52 @@ public class OAuthClient {
         response.requireParameters(OAuth.OAUTH_TOKEN, OAuth.OAUTH_TOKEN_SECRET);
         return response;
     }
+    
+    
+    /** Get a fresh request token from the service provider.
+     * 
+     * @param accessor
+     *            should contain a consumer that contains a non-null consumerKey
+     *            and consumerSecret. Also,
+     *            accessor.consumer.serviceProvider.requestTokenURL should be
+     *            the URL (determined by the service provider) for getting a
+     *            request token.
+     * @param httpMethod
+     *            typically OAuthMessage.POST or OAuthMessage.GET, or null to
+     *            use the default method.
+     * @param parameters
+     *            additional parameters for this request, or null to indicate
+     *            that there are no additional parameters.
+     * @return the response from the service provider
+     * @throws OAuthProblemException
+     *             the HTTP response status code was not 200 (OK)
+     */
+    public OAuthMessage getRequestResponse(OAuthAccessor accessor, String httpMethod,
+            Collection<? extends Map.Entry> parameters)
+        throws IOException, OAuthException, URISyntaxException
+    {
+        accessor.accessToken = null;
+        accessor.tokenSecret = null;
+        {
+            // This code supports the 'Variable Accessor Secret' extension
+            // described in http://oauth.pbwiki.com/AccessorSecret
+            Object accessorSecret = accessor
+                    .getProperty(OAuthConsumer.ACCESSOR_SECRET);
+            if (accessorSecret != null) {
+                List<Map.Entry> p = (parameters == null) ? new ArrayList<Map.Entry>(
+                        1)
+                        : new ArrayList<Map.Entry>(parameters);
+                p.add(new OAuth.Parameter("oauth_accessor_secret",
+                        accessorSecret.toString()));
+                parameters = p;
+                // But don't modify the caller's parameters.
+            }
+        }
+        OAuthMessage response = invoke(accessor, httpMethod,
+                accessor.consumer.serviceProvider.requestTokenURL, parameters);
+        
+        return response;
+    }
 
     /**
      * Get an access token from the service provider, in exchange for an

@@ -18,6 +18,7 @@ package net.oauth.client;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
 import java.util.Map;
 import net.oauth.OAuth;
 import net.oauth.OAuthMessage;
@@ -103,7 +104,7 @@ public class OAuthResponseMessage extends OAuthMessage
         super.completeParameters();
         String body = readBodyAsString();
         if (body != null) {
-            addParameters(OAuth.decodeForm(body.trim()));
+            addParameters(OAuth.decodeForm(URLEncoder.encode(body.trim(),"UTF-8")));
         }
     }
 

@@ -3,9 +3,9 @@
     <groupId>com.simbacode.payments</groupId>
     <artifactId>mobipayments</artifactId>
     <packaging>jar</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>Simbacode Mobile Payments Library</name>
-    <description>The best Mobile Payment library out there</description>
+    <version>0.0.1</version>
+    <name>Simbacode Mobile Money Payments Library</name>
+    <description>The best Mobile Mobile Payment library out there</description>
     <url>http://github.com/Simbacode/mobipayments</url>
   
     <developers>
