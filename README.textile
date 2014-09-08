@@ -12,14 +12,7 @@ h3. How to
 This is a Maven poject and hence it is easy to use the library. 
 To directly use it as part of your project source code;
 1. git clone.
-2.You can also use maven. 
-<code>
-<dependency>
-<groupId>com.simbacode.payments</groupId>
-    <artifactId>mobipayments</artifactId>
-    <version>0.0.1</version>
-</dependency>
-</code>
+
 Make sure that you provide a properties file. see pesapal.properties for example
 but remember to change the following properties to your needs;
 
