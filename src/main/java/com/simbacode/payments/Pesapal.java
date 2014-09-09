@@ -4,30 +4,26 @@
  */
 package com.simbacode.payments;
 
-import java.util.Properties;
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.io.FileInputStream;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Properties;
 
-import net.oauth.client.httpclient4.HttpClient4;
-import net.oauth.client.OAuthClient;
-import net.oauth.OAuthServiceProvider;
-import net.oauth.OAuthConsumer;
-import net.oauth.OAuthAccessor;
 import net.oauth.OAuth;
-import net.oauth.OAuthMessage;
+import net.oauth.OAuthAccessor;
+import net.oauth.OAuthConsumer;
 import net.oauth.OAuthException;
+import net.oauth.OAuthMessage;
+import net.oauth.OAuthServiceProvider;
+import net.oauth.client.OAuthClient;
+import net.oauth.client.httpclient4.HttpClient4;
+
 import org.apache.commons.lang3.StringEscapeUtils;
 
 /**

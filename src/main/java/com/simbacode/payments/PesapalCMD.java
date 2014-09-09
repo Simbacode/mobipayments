@@ -7,7 +7,6 @@
 package com.simbacode.payments;
 
 import java.io.File;
-import net.oauth.OAuthMessage;
 
 /**
  *
