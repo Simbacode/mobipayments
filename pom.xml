@@ -6,12 +6,18 @@
 
 	<name>Mobipayments</name>
 	<url>http://github.com/Simbacode/mobipayments</url>
+	<contributors>
+		<contributor>
+			<name>Acellam Guy</name>
+			<email>abiccel@yahoo.com</email>
+		</contributor>
+	</contributors>
 	<scm>
-		<developerConnection>scm:git:ssh://git@github.com:Simbacode/mobipayments.git</developerConnection>
+		<developerConnection>scm:git:git+ssh://git@github.com:Simbacode/mobipayments.git</developerConnection>
 		<connection>scm:git:ssh://git@github.com:Simbacode/mobipayments.git</connection>
 		<url>http://github.com/Simbacode/mobipayments/tree/master/</url>
-	  <tag>mobipayments-0.0.1</tag>
-  </scm>
+		<tag>mobipayments-0.0.1</tag>
+	</scm>
 	<issueManagement>
 		<url>http://github.com/Simbacode/mobipayments</url>
 	</issueManagement>
@@ -96,6 +102,8 @@
 						<checkModificationExclude>pom.xml</checkModificationExclude>
 						<checkModificationExclude>.classpath</checkModificationExclude>
 						<checkModificationExclude>.gitignore</checkModificationExclude>
+						<checkModificationExclude>Deploy.sh</checkModificationExclude>
+						<checkModificationExclude>Deploy.bat</checkModificationExclude>
 						<checkModificationExclude>.settings/org.eclipse.core.resources.prefs</checkModificationExclude>
 						<checkModificationExclude>.settings/org.eclipse.jdt.core.prefs</checkModificationExclude>
 						<checkModificationExclude>.settings/org.eclipse.m2e.core.prefs</checkModificationExclude>
@@ -193,4 +201,8 @@
 		</profile>
 	</profiles>
 
+	<organization>
+		<name>Simbacode</name>
+		<url>http://simbacode.com</url>
+	</organization>
 </project>
