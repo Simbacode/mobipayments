@@ -13,7 +13,7 @@
 		</contributor>
 	</contributors>
 	<scm>
-		<developerConnection>scm:git:git@git@github.com:Simbacode/mobipayments.git</developerConnection>
+		<developerConnection>scm:git:git@github.com:Simbacode/mobipayments.git</developerConnection>
 		<connection>scm:git:git@github.com:Simbacode/mobipayments.git</connection>
 		<url>git@github.com:Simbacode/mobipayments.git</url>
 		<tag>mobipayments-0.0.1</tag>
