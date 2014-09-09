@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.simbacode</groupId>
 	<artifactId>mobipayments</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<name>Mobipayments</name>
 	<url>http://github.com/Simbacode/mobipayments</url>
@@ -16,7 +16,7 @@
 		<developerConnection>scm:git:git@github.com:Simbacode/mobipayments.git</developerConnection>
 		<connection>scm:git:git@github.com:Simbacode/mobipayments.git</connection>
 		<url>git@github.com:Simbacode/mobipayments.git</url>
-		<tag>HEAD</tag>
+		<tag>mobipayments-0.0.1</tag>
 	</scm>
 	<issueManagement>
 		<url>http://github.com/Simbacode/mobipayments</url>
