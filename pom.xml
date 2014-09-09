@@ -98,6 +98,11 @@
                 <configuration>
                     <checkModificationExcludes>
                         <checkModificationExclude>pom.xml</checkModificationExclude>
+                        <checkModificationExclude>.classpath</checkModificationExclude>
+                        <checkModificationExclude>.gitignore</checkModificationExclude>
+                        <checkModificationExclude>.settings/org.eclipse.core.resources.prefs</checkModificationExclude>
+                        <checkModificationExclude>.settings/org.eclipse.jdt.core.prefs</checkModificationExclude>
+                        <checkModificationExclude>.settings/org.eclipse.m2e.core.prefs</checkModificationExclude>
                     </checkModificationExcludes>
                 </configuration>
             </plugin>
