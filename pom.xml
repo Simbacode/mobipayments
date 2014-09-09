@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.simbacode</groupId>
 	<artifactId>mobipayments</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<name>Mobipayments</name>
 	<url>http://github.com/Simbacode/mobipayments</url>
@@ -11,8 +10,8 @@
 		<developerConnection>scm:git:ssh://git@github.com:Simbacode/mobipayments.git</developerConnection>
 		<connection>scm:git:ssh://git@github.com:Simbacode/mobipayments.git</connection>
 		<url>http://github.com/Simbacode/mobipayments/tree/master/</url>
-		<tag>mobipayments-0.0.1</tag>
-	</scm>
+	  <tag>mobipayments-0.0.1</tag>
+  </scm>
 	<issueManagement>
 		<url>http://github.com/Simbacode/mobipayments</url>
 	</issueManagement>
@@ -91,7 +90,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
-				<version>2.4.1</version>
+				<version>2.4.2</version>
 				<configuration>
 					<checkModificationExcludes>
 						<checkModificationExclude>pom.xml</checkModificationExclude>
@@ -111,7 +110,18 @@
 					</dependency>
 				</dependencies>
 			</plugin>
-			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 
 	</build>
