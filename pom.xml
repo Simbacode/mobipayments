@@ -13,9 +13,9 @@
 		</contributor>
 	</contributors>
 	<scm>
-		<developerConnection>scm:git:git@github.com:Simbacode/mobipayments.git</developerConnection>
-		<connection>scm:git:git@github.com:Simbacode/mobipayments.git</connection>
-		<url>git@github.com:Simbacode/mobipayments.git</url>
+		<developerConnection>scm:git:ssh://git@github.com/simbacode/mobipayments.git</developerConnection>
+		<connection>scm:git:ssh://git@github.com/simbacode/mobipayments.git</connection>
+		<url>http://github.com/simbacode/mobipayments/tree/master</url>
 		<tag>mobipayments-0.0.1</tag>
 	</scm>
 	<issueManagement>
