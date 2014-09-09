@@ -7,10 +7,9 @@
     <name>Mobipayments</name>
     <url>http://github.com/Simbacode/mobipayments</url>
     <scm>
-        <url>https://github.com/Simbacode/mobipayments.git</url>
-        <connection>scm:https://github.com/Simbacode/mobipayments.git</connection>
-        <developerConnection>scm:git@github.com:Simbacode/mobipayments.git</developerConnection>
-        <tag>HEAD</tag>
+        <developerConnection>scm:git:ssh://git@github.com:Simbacode/mobipayments.git</developerConnection>
+        <connection>scm:git:ssh://git@github.com:Simbacode/mobipayments.git</connection>
+        <url>http://github.com/Simbacode/mobipayments/tree/master</url>
     </scm>
     <issueManagement>
         <url>http://github.com/Simbacode/mobipayments</url>
@@ -20,6 +19,19 @@
         <url>https://travis-ci.org/Simbacode/mobipayments</url>
     </ciManagement>
     <description>http://github.com/Simbacode/mobipayments</description>
+    
+    <distributionManagement>
+        <snapshotRepository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus snapshot repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>sonatype-nexus-staging</id>
+            <name>Sonatype Nexus release repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <parent>
         <groupId>org.sonatype.oss</groupId>
@@ -33,13 +45,19 @@
             <url>http://github.com/Simbacode/mobipayments/blob/master/LICENSE.txt</url>
         </license>
     </licenses>
-
+    <developers>
+        <developer>
+            <name>Acellam Guy</name>
+            <email>abiccel@yahoo.com</email>
+            <organization>Simbacode</organization>
+            <organizationUrl>http://www.simbacode.com</organizationUrl>
+        </developer>
+    </developers>
     <properties>
         <java.version>1.7</java.version>
         <jacoco.version>0.6.4.201312101107</jacoco.version>
         <arguments>-e</arguments>
     </properties>
-
     <build>
         <plugins>
             <!-- Set up java 7 -->
@@ -73,51 +91,18 @@
                     </execution>
                 </executions>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.2.2</version>
+                <configuration>
+                    <checkModificationExcludes>
+                        <checkModificationExclude>pom.xml</checkModificationExclude>
+                    </checkModificationExcludes>
+                </configuration>
+            </plugin>
         </plugins>
 
-        <pluginManagement>
-            <plugins>
-                <!-- remove M2E warning complaining about usage of maven-enforcer-plugin 
-                in parent -->
-                <plugin>
-                    <groupId>org.eclipse.m2e</groupId>
-                    <artifactId>lifecycle-mapping</artifactId>
-                    <version>1.0.0</version>
-                    <configuration>
-                        <lifecycleMappingMetadata>
-                            <pluginExecutions>
-                                <pluginExecution>
-                                    <pluginExecutionFilter>
-                                        <groupId>org.apache.maven.plugins</groupId>
-                                        <artifactId>maven-enforcer-plugin</artifactId>
-                                        <versionRange>[1.0.0,)</versionRange>
-                                        <goals>
-                                            <goal>enforce</goal>
-                                        </goals>
-                                    </pluginExecutionFilter>
-                                    <action>
-                                        <ignore />
-                                    </action>
-                                </pluginExecution>
-                            </pluginExecutions>
-                        </lifecycleMappingMetadata>
-                    </configuration>
-                </plugin>
-				
-                <!-- override version of GPG plugin to use new GPG signing features -->
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.5</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-release-plugin</artifactId>
-                    <version>2.4.2</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
     </build>
 
     <dependencies>
