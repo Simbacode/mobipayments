@@ -12,7 +12,7 @@ h3. How to
 This is a Maven poject and hence it is easy to use the library. 
 To directly use it as part of your project source code;
 1. git clone. This is straight forward.
-2. use manven. use the following dependency
+2. use maven. use the following dependency
 
 <pre lang="xml">
   <dependency>
