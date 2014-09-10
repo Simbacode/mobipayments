@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.simbacode</groupId>
 	<artifactId>mobipayments</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 
 	<name>Mobipayments</name>
 	<url>http://github.com/Simbacode/mobipayments</url>
@@ -14,10 +13,11 @@
 		</contributor>
 	</contributors>
 	<scm>
-        <url>git://git@github.com:Simbacode/mobipayments.git</url>
-        <connection>scm:git:git@github.com:Simbacode/mobipayments.git</connection>
-        <developerConnection>scm:git:git@github.com:Simbacode/mobipayments.git</developerConnection>
-    </scm>
+		<url>git://git@github.com:Simbacode/mobipayments.git</url>
+		<connection>scm:git:git@github.com:Simbacode/mobipayments.git</connection>
+		<developerConnection>scm:git:git@github.com:Simbacode/mobipayments.git</developerConnection>
+	  <tag>mobipayments-0.0.1</tag>
+  </scm>
 	<issueManagement>
 		<url>http://github.com/Simbacode/mobipayments</url>
 		<system>Git Hub</system>
@@ -68,13 +68,13 @@
 	<developers>
 		<developer>
 			<id>mistaguy</id>
-            <name>Acellam Guy</name>
-            <url>http://www.mistaguy.com</url>
-            <timezone>gmt+3</timezone>
-            <roles>
-                <role>Main Developer</role>
-            </roles>
-        </developer>
+			<name>Acellam Guy</name>
+			<url>http://www.mistaguy.com</url>
+			<timezone>gmt+3</timezone>
+			<roles>
+				<role>Main Developer</role>
+			</roles>
+		</developer>
 	</developers>
 	<properties>
 		<java.version>1.7</java.version>
@@ -147,17 +147,17 @@
 					</execution>
 				</executions>
 			</plugin>
-			 <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <!-- The Base URL of Nexus instance where we want to stage -->
-                    <nexusUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</nexusUrl>
-                    <serverId>sonatype-nexus-staging</serverId>
-                </configuration>
-            </plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6</version>
+				<extensions>true</extensions>
+				<configuration>
+					<!-- The Base URL of Nexus instance where we want to stage -->
+					<nexusUrl>https://oss.sonatype.org/service/local/staging/deploy/maven2/</nexusUrl>
+					<serverId>sonatype-nexus-staging</serverId>
+				</configuration>
+			</plugin>
 		</plugins>
 
 	</build>
