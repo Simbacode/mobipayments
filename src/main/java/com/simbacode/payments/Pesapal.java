@@ -78,7 +78,7 @@ public class Pesapal {
 	 * Makes request to the pesapal server and returns the response that
 	 * contains All the OATH details.
 	 * 
-	 * Use this to post a transaction to PesaPal. PesaPal will present the user
+	 * Use this to post a transaction to PesaPal. PesaPal will return a response
 	 * with a page which contains the available payment options and will
 	 * redirect to your site once the user has completed the payment process. A
 	 * tracking id will be returned as a query parameter – this can be used
@@ -152,7 +152,7 @@ public class Pesapal {
 	 * Makes request to the pesapal server and returns the response that
 	 * contains All the OATH details.
 	 * 
-	 * Use this to post a transaction to PesaPal. PesaPal will present the user
+	 * Use this to post a transaction to PesaPal. PesaPal will return a response
 	 * with a page which contains the available payment options and will
 	 * redirect to your site once the user has completed the payment process. A
 	 * tracking id will be returned as a query parameter – this can be used
