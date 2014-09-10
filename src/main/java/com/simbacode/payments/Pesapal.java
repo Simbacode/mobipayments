@@ -30,7 +30,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
  * This is main Pesapal Oauth 1.0 java class
  *
  * @author Acellam Guy
- * @version 0.1
+ * @version 0.0.2
  */
 public class Pesapal {
 
@@ -313,13 +313,15 @@ public class Pesapal {
 	/**
 	 * <p>
 	 * This is to be used with a java services/servlet/web app that you have
-	 * configured your pesapal server as the IPN URL. When the web app receives
-	 * the response from Pesapal, Get the parameters and pass the details to
-	 * this function to this function so that pesapal gives you the details
-	 * about the transaction in the format:
+	 * configured to be as your pesapal server IPN URL. When the web app
+	 * receives the response from Pesapal, Get the parameters and pass the
+	 * details to this function so that pesapal gives you the details about the
+	 * transaction status in the format:
 	 * pesapal_notification_type=CHANGE&pesapal_transaction_tracking_id =<the
 	 * unique tracking id of the transaction>&pesapal_merchant_reference=<the
-	 * merchant reference>.
+	 * merchant reference>. Also remember to parse the header of this response
+	 * to get the payment status.
+	 * 
 	 * </p>
 	 * <p>
 	 * After that remember to send back a response to pesapal in the same format
