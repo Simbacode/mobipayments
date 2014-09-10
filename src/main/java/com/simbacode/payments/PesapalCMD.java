@@ -29,6 +29,6 @@ public class PesapalCMD {
         String last_name = "Guy";
         
         //test
-        System.out.println(new Pesapal(new File("").getAbsolutePath() + "\\pesapal.properties").execute(amount, desc, type, reference, email, phonenumber, first_name, last_name).readBodyAsString());
+        System.out.println(new Pesapal(new File("").getAbsolutePath() + "\\pesapal.properties").PostPesapalDirectOrderV4(amount, desc, type, reference, email, phonenumber, first_name, last_name).readBodyAsString());
     }
 }

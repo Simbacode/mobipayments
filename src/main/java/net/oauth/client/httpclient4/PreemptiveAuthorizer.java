@@ -17,6 +17,7 @@
 package net.oauth.client.httpclient4;
 
 import java.io.IOException;
+
 import org.apache.http.HttpException;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpRequest;
@@ -69,7 +70,8 @@ public class PreemptiveAuthorizer implements HttpRequestInterceptor {
      * of the preferred auth schemes and select the first one for which an
      * AuthScheme and matching Credentials are available.
      */
-    public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
+    @SuppressWarnings("rawtypes")
+	public void process(HttpRequest request, HttpContext context) throws HttpException, IOException {
         AuthState authState = (AuthState) context.getAttribute(ClientContext.TARGET_AUTH_STATE);
         if (authState != null && authState.getAuthScheme() != null) {
             return;

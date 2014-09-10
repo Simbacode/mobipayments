@@ -101,7 +101,7 @@ public class URLConnectionClient implements HttpClient {
                 connection.setDoOutput(true);
                 OutputStream output = connection.getOutputStream();
                 try {
-                    final ExcerptInputStream ex = new ExcerptInputStream(body);
+                    ex = new ExcerptInputStream(body);
                     byte[] b = new byte[1024];
                     for (int n; 0 < (n = ex.read(b));) {
                         output.write(b, 0, n);
@@ -118,5 +118,6 @@ public class URLConnectionClient implements HttpClient {
     }
 
     private static final String EOL = HttpResponseMessage.EOL;
+	private ExcerptInputStream ex;
 
 }

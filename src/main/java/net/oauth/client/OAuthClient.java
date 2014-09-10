@@ -23,6 +23,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import net.oauth.OAuth;
 import net.oauth.OAuthAccessor;
 import net.oauth.OAuthConsumer;
@@ -60,6 +61,7 @@ import net.oauth.signature.OAuthSignatureMethod;
  * the redirected request to be signed.
  * 
  * @author John Kristian
+ * modified by @author Acellam Guy
  */
 public class OAuthClient {
 
@@ -143,7 +145,8 @@ public class OAuthClient {
      * @throws OAuthProblemException
      *             the HTTP response status code was not 200 (OK)
      */
-    public void getRequestToken(OAuthAccessor accessor, String httpMethod,
+    @SuppressWarnings("rawtypes")
+	public void getRequestToken(OAuthAccessor accessor, String httpMethod,
             Collection<? extends Map.Entry> parameters)
         throws IOException, OAuthException, URISyntaxException
     {
@@ -168,7 +171,8 @@ public class OAuthClient {
      * @throws OAuthProblemException
      *             the HTTP response status code was not 200 (OK)
      */
-    public OAuthMessage getRequestTokenResponse(OAuthAccessor accessor, String httpMethod,
+    @SuppressWarnings("rawtypes")
+	public OAuthMessage getRequestTokenResponse(OAuthAccessor accessor, String httpMethod,
             Collection<? extends Map.Entry> parameters)
         throws IOException, OAuthException, URISyntaxException
     {
@@ -198,7 +202,9 @@ public class OAuthClient {
     }
     
     
-    /** Get a fresh request token from the service provider.
+    /** Get Oauth Details from Request.
+     * 
+     * @author Acellam Guy
      * 
      * @param accessor
      *            should contain a consumer that contains a non-null consumerKey
@@ -216,7 +222,8 @@ public class OAuthClient {
      * @throws OAuthProblemException
      *             the HTTP response status code was not 200 (OK)
      */
-    public OAuthMessage getRequestResponse(OAuthAccessor accessor, String httpMethod,
+    @SuppressWarnings("rawtypes")
+	public OAuthMessage getRequestResponse(OAuthAccessor accessor, String httpMethod,
             Collection<? extends Map.Entry> parameters)
         throws IOException, OAuthException, URISyntaxException
     {
@@ -234,7 +241,6 @@ public class OAuthClient {
                 p.add(new OAuth.Parameter("oauth_accessor_secret",
                         accessorSecret.toString()));
                 parameters = p;
-                // But don't modify the caller's parameters.
             }
         }
         OAuthMessage response = invoke(accessor, httpMethod,
@@ -263,7 +269,8 @@ public class OAuthClient {
      * @throws OAuthProblemException
      *             the HTTP response status code was not 200 (OK)
      */
-    public OAuthMessage getAccessToken(OAuthAccessor accessor, String httpMethod,
+    @SuppressWarnings("rawtypes")
+	public OAuthMessage getAccessToken(OAuthAccessor accessor, String httpMethod,
             Collection<? extends Map.Entry> parameters) throws IOException, OAuthException, URISyntaxException {
         if (accessor.requestToken != null) {
             if (parameters == null) {
@@ -294,7 +301,8 @@ public class OAuthClient {
      * @throws OAuthProblemException
      *             the HTTP response status code was not 200 (OK)
      */
-    public OAuthMessage invoke(OAuthAccessor accessor, String httpMethod,
+    @SuppressWarnings("rawtypes")
+	public OAuthMessage invoke(OAuthAccessor accessor, String httpMethod,
             String url, Collection<? extends Map.Entry> parameters)
     throws IOException, OAuthException, URISyntaxException {
         OAuthMessage request = accessor.newRequestMessage(httpMethod, url, parameters);
@@ -332,7 +340,8 @@ public class OAuthClient {
      * @throws OAuthProblemException
      *                 the HTTP response status code was not 200 (OK)
      */
-    public OAuthMessage invoke(OAuthAccessor accessor, String url,
+    @SuppressWarnings("rawtypes")
+	public OAuthMessage invoke(OAuthAccessor accessor, String url,
             Collection<? extends Map.Entry> parameters) throws IOException,
             OAuthException, URISyntaxException {
         return invoke(accessor, null, url, parameters);
