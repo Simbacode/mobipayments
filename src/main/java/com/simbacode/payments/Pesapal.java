@@ -309,4 +309,68 @@ public class Pesapal {
 		return client.getRequestResponse(accessor, "GET", parameters);
 
 	}
+
+	/**
+	 * <p>
+	 * This is to be used with a java services/servlet/web app that you have
+	 * configured your pesapal server as the IPN URL. When the web app receives
+	 * the response from Pesapal, Get the parameters and pass the details to
+	 * this function to this function so that pesapal gives you the details
+	 * about the transaction in the format:
+	 * pesapal_notification_type=CHANGE&pesapal_transaction_tracking_id =<the
+	 * unique tracking id of the transaction>&pesapal_merchant_reference=<the
+	 * merchant reference>.
+	 * </p>
+	 * <p>
+	 * After that remember to send back a response to pesapal in the same format
+	 * using your web app.This is to acknowledge the receipt of the sent IPN.
+	 * Send back the response after doing some things such as updating records
+	 * in your data store.
+	 * </p>
+	 *
+	 * @param notificationType
+	 *            this one of the notification types specified by pesapal
+	 * @param reference
+	 *            the order id/ reference id you created during
+	 *            {@link Pesapal#PostPesapalDirectOrderV4}
+	 * @param trackingId
+	 *            the reference that was returned by pesapal server during post
+	 *            order
+	 * @return {@link OAuthMessage}
+	 * @throws IOException
+	 * @throws OAuthException
+	 * @throws URISyntaxException
+	 */
+	@SuppressWarnings("rawtypes")
+	public OAuthMessage InstantPaymentNotification(String notificationType,
+			String reference, String trackingId) throws IOException,
+			OAuthException, URISyntaxException {
+
+		String reqUrl = props
+				.getProperty("pesapal.serviceProvider.querypaymentstatus");
+
+		if (notificationType == "CHANGE" && trackingId != "") {
+			OAuthAccessor accessor = createOAuthAccessor(reqUrl);
+			OAuthClient client = new OAuthClient(new HttpClient4());
+
+			reference = URLEncoder.encode(reference, "UTF-8");
+			trackingId = URLEncoder.encode(trackingId, "UTF-8");
+
+			// add other parameters
+			Collection<? extends Map.Entry> parameters = new ArrayList<Map.Entry>();
+			List<Map.Entry> p = (parameters == null) ? new ArrayList<Map.Entry>(
+					1) : new ArrayList<Map.Entry>(parameters);
+			p.add(new OAuth.Parameter("pesapal_merchant_reference", reference));
+			p.add(new OAuth.Parameter("pesapal_transaction_tracking_id",
+					trackingId));
+			parameters = p;
+
+			// make request
+			return client.getRequestResponse(accessor, "GET", parameters);
+		} else {
+			return null;
+		}
+
+	}
+
 }
