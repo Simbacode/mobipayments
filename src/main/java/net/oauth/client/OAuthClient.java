@@ -203,9 +203,7 @@ public class OAuthClient {
     
     
     /** Get Oauth Details from Request.
-     * 
-     * @author Acellam Guy
-     * 
+     *  
      * @param accessor
      *            should contain a consumer that contains a non-null consumerKey
      *            and consumerSecret. Also,
