@@ -24,7 +24,7 @@ To directly use it as part of your project source code;
 
 Make sure that you provide a properties file. see pesapal.properties for example
 but remember to change the following properties to your needs;
-
+<pre lang="xml">
 pesapal.consumerKey: {YOUR KEY}
 pesapal.consumerSecret: {YOUR SECRET}
 pesapal.callbackURL: http://simbacode.com/redirect.php
@@ -32,7 +32,7 @@ pesapal.consumer.oauth_signature_method: HMAC-SHA1
 pesapal.serviceProvider.requestTokenURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
 pesapal.serviceProvider.userAuthorizationURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
 pesapal.serviceProvider.accessTokenURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
-
+</pre>
 
 There is a sample CMD app called pesapalCMD that uses this library in the src. enjoy!
 
