@@ -11,7 +11,16 @@ h3. How to
 
 This is a Maven poject and hence it is easy to use the library. 
 To directly use it as part of your project source code;
-1. git clone.
+1. git clone. This is straight forward.
+2. use manven. use the following dependency
+bc.. put this in your maven POM
+
+  <dependency>
+      <groupId>com.simbacode</groupId>
+      <artifactId>mobipayments</artifactId>
+      <version>0.0.1</version>
+    </dependency>
+
 
 Make sure that you provide a properties file. see pesapal.properties for example
 but remember to change the following properties to your needs;
