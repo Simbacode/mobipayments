@@ -1,6 +1,6 @@
 h2. Welcome to the home of Mobipayments, the simple mobile money payment Java lib!
 
-Currently we are integrating pesapal;
+Currently we support pesapal;
 
  * Pespal API is on OAUTH 1.0
  * Please Replace contents in {} with your details
@@ -13,25 +13,67 @@ This is a Maven poject and hence it is easy to use the library.
 To directly use it as part of your project source code;
 1. git clone. This is straight forward.
 2. use maven. use the following dependency
-
 <pre lang="xml">
   <dependency>
       <groupId>com.simbacode</groupId>
       <artifactId>mobipayments</artifactId>
-      <version>0.0.1</version>
+      <version>0.0.2</version>
     </dependency>
+</pre>
+3.Apache Buildr
+<pre>
+ <code>
+  'com.simbacode:mobipayments:jar:0.0.2'
+ </code>
+</pre>
+4.Apache Ivy
+<pre>
+ <code>
+  <dependency org="com.simbacode" name="mobipayments" rev="0.0.2" />
+ </code>
+</pre>
+4.Grovy Grape
+<pre>
+ <code>
+  @Grapes( 
+	@Grab(group='com.simbacode', module='mobipayments', version='0.0.2') 
+	)
+ </code>
+</pre>
+6. Gradle/Grails
+<pre>
+ <code>
+  compile 'com.simbacode:mobipayments:0.0.2'
+ </code>
+</pre>
+7.Scala SBT
+<pre>
+ <code>
+  libraryDependencies += "com.simbacode" % "mobipayments" % "0.0.2"
+ </code>
+</pre>
+8.Leiningen
+<pre>
+ <code>
+  [com.simbacode/mobipayments "0.0.2"]
+ </code>
 </pre>
 
 Make sure that you provide a properties file. see pesapal.properties for example
 but remember to change the following properties to your needs;
-<pre lang="xml">
+<pre>
+#your consumer details
 pesapal.consumerKey: {YOUR KEY}
 pesapal.consumerSecret: {YOUR SECRET}
 pesapal.callbackURL: http://simbacode.com/redirect.php
 pesapal.consumer.oauth_signature_method: HMAC-SHA1
-pesapal.serviceProvider.requestTokenURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
-pesapal.serviceProvider.userAuthorizationURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
-pesapal.serviceProvider.accessTokenURL: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
+
+# pesapal/provider server URL.
+pesapal.serviceProvider.PostPesapalDirectOrderV4: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
+pesapal.serviceProvider.QueryPaymentStatus: https://demo.pesapal.com/API/QueryPaymentStatus
+pesapal.serviceProvider.QueryPaymentStatusByMerchantRef: https://demo.pesapal.com/API/QueryPaymentStatusByMerchantRef
+pesapal.serviceProvider.QueryPaymentDetails: https://demo.pesapal.com/API/QueryPaymentDetails
+pesapal.serviceProvider.querypaymentstatus: https://demo.pesapal.com/api/querypaymentstatus
 </pre>
 
 There is a sample CMD app called pesapalCMD that uses this library in the src. enjoy!

@@ -29,7 +29,7 @@ import java.net.URL;
  */
 public interface HttpClientPool {
 
-    /** Get the appropriate HttpClient for sending a request to the given URL. */
-    public org.apache.http.client.HttpClient getHttpClient(URL server);
+	/** Get the appropriate HttpClient for sending a request to the given URL. */
+	public org.apache.http.client.HttpClient getHttpClient(URL server);
 
 }
