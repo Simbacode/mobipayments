@@ -20,6 +20,7 @@ To directly use it as part of your project source code;
 </pre>
 
 2. use maven. use the following dependency
+
 <pre lang="xml">
   <dependency>
       <groupId>com.simbacode</groupId>
