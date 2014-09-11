@@ -6,6 +6,7 @@ Currently we support pesapal;
  * Please Replace contents in {} with your details
 
 !https://secure.travis-ci.org/Simbacode/mobipayments.png?branch=master(travis-ci-status)!
+!https://coveralls.io/repos/mistaguy/mobipayments/badge.png?branch=master(Coverage Status)!:https://coveralls.io/r/mistaguy/mobipayments?branch=master
 
 h3. How to
 
