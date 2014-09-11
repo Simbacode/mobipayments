@@ -12,6 +12,13 @@ h3. How to
 This is a Maven poject and hence it is easy to use the library. 
 To directly use it as part of your project source code;
 1. git clone. This is straight forward.
+
+<pre>
+ <code>
+  git clone https://github.com/Simbacode/mobipayments.git
+ </code>
+</pre>
+
 2. use maven. use the following dependency
 <pre lang="xml">
   <dependency>
@@ -20,19 +27,25 @@ To directly use it as part of your project source code;
       <version>0.0.2</version>
     </dependency>
 </pre>
+
 3.Apache Buildr
+
 <pre>
  <code>
   'com.simbacode:mobipayments:jar:0.0.2'
  </code>
 </pre>
+
 4.Apache Ivy
+
 <pre>
  <code>
   <dependency org="com.simbacode" name="mobipayments" rev="0.0.2" />
  </code>
 </pre>
+
 4.Grovy Grape
+
 <pre>
  <code>
   @Grapes( 
@@ -40,19 +53,25 @@ To directly use it as part of your project source code;
 	)
  </code>
 </pre>
+
 6. Gradle/Grails
+
 <pre>
  <code>
   compile 'com.simbacode:mobipayments:0.0.2'
  </code>
 </pre>
+
 7.Scala SBT
+
 <pre>
  <code>
   libraryDependencies += "com.simbacode" % "mobipayments" % "0.0.2"
  </code>
 </pre>
+
 8.Leiningen
+
 <pre>
  <code>
   [com.simbacode/mobipayments "0.0.2"]
@@ -67,8 +86,7 @@ pesapal.consumerKey: {YOUR KEY}
 pesapal.consumerSecret: {YOUR SECRET}
 pesapal.callbackURL: http://simbacode.com/redirect.php
 pesapal.consumer.oauth_signature_method: HMAC-SHA1
-
-# pesapal/provider server URL.
+#pesapal/provider server URL.
 pesapal.serviceProvider.PostPesapalDirectOrderV4: http://demo.pesapal.com/API/PostPesapalDirectOrderV4
 pesapal.serviceProvider.QueryPaymentStatus: https://demo.pesapal.com/API/QueryPaymentStatus
 pesapal.serviceProvider.QueryPaymentStatusByMerchantRef: https://demo.pesapal.com/API/QueryPaymentStatusByMerchantRef
