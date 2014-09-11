@@ -5,7 +5,7 @@ Currently we support pesapal;
  * Pespal API is on OAUTH 1.0
  * Please Replace contents in {} with your details
 
-[![Build Status](https://travis-ci.org/Simbacode/mobipayments.svg?branch=master)](https://travis-ci.org/Simbacode/mobipayments)!https://coveralls.io/repos/mistaguy/mobipayments/badge.png?branch=master(Coverage Status)!:https://coveralls.io/r/mistaguy/mobipayments?branch=master
+!https://secure.travis-ci.org/Simbacode/mobipayments.png?branch=master(travis-ci-status)!:https://travis-ci.org/Simbacode/mobipayments !https://coveralls.io/repos/mistaguy/mobipayments/badge.png?branch=master(Coverage Status)!:https://coveralls.io/r/mistaguy/mobipayments?branch=master
 
 h3. How to
 
