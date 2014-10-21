@@ -4,9 +4,9 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-import com.simbacode.pesapal.testcases.PesapalTest;
+import com.simbacode.pesapal.testcases.PostRequestTest;
 
 @RunWith(Suite.class)
-@SuiteClasses({ PesapalTest.class })
+@SuiteClasses({ PostRequestTest.class })
 public class MobipaymentsTest {
 }
