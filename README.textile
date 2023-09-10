@@ -2,7 +2,7 @@ h2. Welcome to the home of Mobipayments, the simple mobile money payment Java li
 
 Currently we support pesapal;
 
- * Pespal API is on OAUTH 1.0
+ * Pesapal API is on OAUTH 1.0
  * Please Replace contents in {} with your details
 
 !https://secure.travis-ci.org/Simbacode/mobipayments.png?branch=master(travis-ci-status)!:https://travis-ci.org/Simbacode/mobipayments !https://coveralls.io/repos/mistaguy/mobipayments/badge.png?branch=master(Coverage Status)!:https://coveralls.io/r/mistaguy/mobipayments?branch=master
